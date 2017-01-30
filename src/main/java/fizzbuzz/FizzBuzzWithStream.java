@@ -1,7 +1,6 @@
 package fizzbuzz;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,30 +20,28 @@ public class FizzBuzzWithStream implements IFizzBuzz {
 
 		List<String> fizzBuzzValues = IntStream.range(1, maxValue + 1) //
 				.boxed() //
-				.map(getFizzBuzzValue()) //
+				.map(this::getFizzBuzzValue) //
 				.collect(Collectors.toList());
 
 		return fizzBuzzValues.toArray(new String[] {});
 
 	}
 
-	private Function<? super Integer, ? extends String> getFizzBuzzValue() {
-		return intValue -> {
-			String result;
-			if (!isMultipleOf3(intValue) && !isMultipleOf5(intValue)) {
-				result = String.valueOf(intValue);
-			} else {
-				StringBuilder buffer = new StringBuilder();
-				if (isMultipleOf3(intValue)) {
-					buffer.append(FIZZ);
-				}
-				if (isMultipleOf5(intValue)) {
-					buffer.append(BUZZ);
-				}
-				result = buffer.toString();
+	private String getFizzBuzzValue(Integer intValue) {
+		String result;
+		if (!isMultipleOf3(intValue) && !isMultipleOf5(intValue)) {
+			result = String.valueOf(intValue);
+		} else {
+			StringBuilder buffer = new StringBuilder();
+			if (isMultipleOf3(intValue)) {
+				buffer.append(FIZZ);
 			}
-			return result;
-		};
+			if (isMultipleOf5(intValue)) {
+				buffer.append(BUZZ);
+			}
+			result = buffer.toString();
+		}
+		return result;
 	}
 
 	private boolean isMultipleOf3(Integer intValue) {
